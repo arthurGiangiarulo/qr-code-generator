@@ -170,7 +170,7 @@ export default function HomePage() {
   <p>
     Desenvolvido pelo{" "}
     <Link
-      href="https://arturcosta.dev"
+      href="https://github.com/arthurGiangiarulo"
       target="_blank"
       rel="noopener noreferrer"
       className="hover:underline"
@@ -182,7 +182,7 @@ export default function HomePage() {
   {/* Nova área de contribuição */}
   <p className="mt-4">
     <Link
-      href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO"
+      href="https://github.com/arthurGiangiarulo/qr-code-generator"
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center justify-center gap-2 text-white hover:opacity-80 transition"
