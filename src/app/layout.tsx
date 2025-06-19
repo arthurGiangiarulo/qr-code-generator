@@ -8,7 +8,9 @@ export const metadata: Metadata = {
 
 import "./globals.css";          // 1º linha de imports (logo acima dos fonts Google, se seguir usando)
 
-export default function RootLayout({ children }) {
+import { ReactNode } from "react";
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
       <body className="bg-white font-neo text-text antialiased">
