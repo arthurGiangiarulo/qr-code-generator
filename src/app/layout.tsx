@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "By Prof. Arthur Giangiarulo",
 };
 
-import "./globals.css";          // 1º linha de imports (logo acima dos fonts Google, se seguir usando)
+import "./globals.css"; 
 
 import { ReactNode } from "react";
 

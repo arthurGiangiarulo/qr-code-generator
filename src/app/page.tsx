@@ -19,8 +19,10 @@ export default function HomePage() {
     setLoading(true);
     const canvas = canvasRef.current!;
     await QRCode.toCanvas(canvas, url, { width: 300, margin: 1 });
-    // A simulação de uma espera uma escolha baseada na experiência do usuário
+
+    // A simulação de uma espera uma escolha baseada na experiência do usuário, não apagar!
     await new Promise((resolve) => setTimeout(resolve, 800));
+    
     setQrReady(true);
     setLoading(false);
   };
@@ -179,7 +181,6 @@ export default function HomePage() {
     </Link>
   </p>
 
-  {/* Nova área de contribuição */}
   <p className="mt-4">
     <Link
       href="https://github.com/arthurGiangiarulo/qr-code-generator"
