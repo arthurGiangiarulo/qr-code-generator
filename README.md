@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gerador de QR Code
 
-## Getting Started
+Este é um projeto simples de **React + Next.js** que gera QR Codes a partir de uma URL informada pelo usuário. A aplicação exibe o QR Code em um canvas, insere o logo do SENAI no centro e permite baixar a imagem gerada em formato PNG.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📦 Tecnologias
+
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [qrcode](https://www.npmjs.com/package/qrcode)
+- [lucide-react](https://github.com/lucide-icons/lucide) (ícones)
+- [Material UI](https://mui.com/) (componente de botão)
+- Tailwind CSS
+
+---
+
+## 🏁 Como rodar localmente
+
+1. **Clone o repositório**
+
+   ```bash
+   git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+   cd SEU_REPOSITORIO
+   ```
+
+2. **Instale as dependências**
+
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+3. **Inicie o servidor de desenvolvimento**
+
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+4. Abra [http://localhost:3000](http://localhost:3000) no navegador e comece a usar!
+
+---
+
+## 📂 Estrutura do projeto
+
+```
+/
+├─ public/
+│  └─ logo-senai.png       # Logo que é sobreposto ao QR Code
+├─ src/
+│  └─ app/
+│     └─ page.tsx          # Página única do gerador
+├─ styles/
+│  └─ globals.css          # Configuração do Tailwind
+├─ package.json
+└─ README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Input de URL**: o usuário cola uma URL qualquer.
+- **Geração de QR Code**: o canvas desenha o código e sobrepõe o logo.
+- **Animação de clique**: efeito "ripple" no botão de gerar.
+- **Download**: baixa o QR Code final em PNG.
+- **Limpar**: reseta o estado e o canvas.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Como contribuir
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Fork este repositório
+2. Crie uma branch com sua feature:
+   ```bash
+   git checkout -b feature/nome-da-sua-feature
+   ```
+3. Faça commit das suas alterações
+4. Abra um Pull Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📄 Licença
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Feito com ❤️ por Prof. Arthur Giangiarulo. Contribuições são muito bem-vindas!
+
