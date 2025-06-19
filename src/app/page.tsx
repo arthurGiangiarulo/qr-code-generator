@@ -5,62 +5,29 @@ import { Download } from "lucide-react";
 import QRCode from "qrcode";
 import Link from "next/link";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);
   const [qrReady, setQrReady] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  function animateButton(e: React.MouseEvent<HTMLButtonElement>) {
-    // 1. referência ao botão
-    const btn = e.currentTarget;
-
-    // 2. dimensões para o diâmetro da onda (cobre o botão inteiro)
-    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
-
-    // 3. criamos o elemento
-    const ripple = document.createElement("span");
-    ripple.style.width = ripple.style.height = `${diameter}px`;
-    ripple.style.position = "absolute";
-    ripple.style.borderRadius = "50%";
-    ripple.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-    ripple.style.pointerEvents = "none";
-    ripple.style.transform = "scale(0)";
-    ripple.style.animation = "ripple 600ms linear";
-
-    // 4. calculamos a posição do centro da onda
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - diameter / 2;
-    const y = e.clientY - rect.top - diameter / 2;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-
-    // 5. adiciona e remove após a animação
-    btn.appendChild(ripple);
-    ripple.addEventListener("animationend", () => ripple.remove());
-  }
-
-  const generateQR = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    animateButton(e);
-
+  const generateQR = async () => {
     if (!url) return;
+    setLoading(true);
     const canvas = canvasRef.current!;
     await QRCode.toCanvas(canvas, url, { width: 300, margin: 1 });
-    const ctx = canvas.getContext("2d")!;
-    const img = new Image();
-    img.src = "/logo-senai.png";
-    img.onload = () => {
-      const logoSize = 60;
-      const x = (canvas.width - logoSize) / 2;
-      const y = (canvas.height - logoSize) / 2;
-      ctx.drawImage(img, x, y, logoSize, logoSize);
-      setQrReady(true);
-    };
+    // A simulação de uma espera uma escolha baseada na experiência do usuário
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    setQrReady(true);
+    setLoading(false);
   };
 
   const reset = () => {
     setUrl("");
     setQrReady(false);
+    setLoading(false);
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,7 +66,7 @@ export default function HomePage() {
         <div className="w-full max-w-md space-y-4">
           <input
             type="text"
-            placeholder="Cole a URL aqui..."
+            placeholder="Insira a URL aqui..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             className="w-full p-3 border-1 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#164194]"
@@ -135,7 +102,7 @@ export default function HomePage() {
             <button
               onClick={downloadPNG}
               disabled={!qrReady}
-              className="flex items-center px-3 py-2 bg-[#1f8ece] text-white rounded-lg shadow cursor-pointer hover:bg-opacity-90 disabled:opacity-50 transition"
+              className="flex items-center px-3 py-2 bg-[#1f8ece] text-white rounded-sm shadow cursor-pointer hover:bg-opacity-90 disabled:opacity-50 transition"
             >
               <Download size={20} />
             </button>
@@ -143,12 +110,22 @@ export default function HomePage() {
         </div>
 
         <div className="mt-8">
-          <canvas
-            ref={canvasRef}
-            width={300}
-            height={300}
-            className="border-1 border-gray-400 rounded"
-          />
+        <div className="relative w-[300px] h-[300px] border border-gray-400 rounded-lg overflow-hidden">
+            {loading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white">
+                <CircularProgress />
+              </div>
+            )}
+            <canvas
+              ref={canvasRef}
+              width={300}
+              height={300}
+              className={`
+                w-full h-full
+                ${loading ? "opacity-0" : "block"}
+              `}
+            />
+          </div>
         </div>
       </section>
 
