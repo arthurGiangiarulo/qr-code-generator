@@ -3,13 +3,46 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { Download } from "lucide-react";
 import QRCode from "qrcode";
+import Link from "next/link";
+import Button from "@mui/material/Button";
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
   const [qrReady, setQrReady] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const generateQR = async () => {
+  function animateButton(e: React.MouseEvent<HTMLButtonElement>) {
+    // 1. referência ao botão
+    const btn = e.currentTarget;
+
+    // 2. dimensões para o diâmetro da onda (cobre o botão inteiro)
+    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+
+    // 3. criamos o elemento
+    const ripple = document.createElement("span");
+    ripple.style.width = ripple.style.height = `${diameter}px`;
+    ripple.style.position = "absolute";
+    ripple.style.borderRadius = "50%";
+    ripple.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+    ripple.style.pointerEvents = "none";
+    ripple.style.transform = "scale(0)";
+    ripple.style.animation = "ripple 600ms linear";
+
+    // 4. calculamos a posição do centro da onda
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - diameter / 2;
+    const y = e.clientY - rect.top - diameter / 2;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+
+    // 5. adiciona e remove após a animação
+    btn.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove());
+  }
+
+  const generateQR = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    animateButton(e);
+
     if (!url) return;
     const canvas = canvasRef.current!;
     await QRCode.toCanvas(canvas, url, { width: 300, margin: 1 });
@@ -72,23 +105,37 @@ export default function HomePage() {
             className="w-full p-3 border-1 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#164194]"
           />
           <div className="flex justify-between gap-2">
-            <button
+            <Button
               onClick={generateQR}
               disabled={!url}
-              className="flex-grow px-4 py-2 bg-[#164194] text-white rounded-lg shadow hover:bg-opacity-90 disabled:opacity-50 transition"
+              className="
+                flex-grow px-4 py-2
+                bg-[#164194] text-white rounded shadow
+                hover:opacity-90
+                disabled:opacity-50
+                cursor-pointer
+                transition"
+              disableElevation 
+              variant="contained"
             >
               Gerar QR Code
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={reset}
-              className="flex-grow px-4 py-2 text-[#164194] border-2 border-[#164194] rounded-lg hover:bg-gray-100 transition"
+              className="
+                flex-grow px-4 py-2 
+                text-[#164194] border-2 border-[#164194] 
+                rounded-lg cursor-pointer 
+                hover:bg-gray-100 transition"
+
+              variant="outlined"
             >
               Limpar
-            </button>
+            </Button>
             <button
               onClick={downloadPNG}
               disabled={!qrReady}
-              className="flex items-center px-3 py-2 bg-[#1f8ece] text-white rounded-lg shadow hover:bg-opacity-90 disabled:opacity-50 transition"
+              className="flex items-center px-3 py-2 bg-[#1f8ece] text-white rounded-lg shadow cursor-pointer hover:bg-opacity-90 disabled:opacity-50 transition"
             >
               <Download size={20} />
             </button>
@@ -100,10 +147,27 @@ export default function HomePage() {
             ref={canvasRef}
             width={300}
             height={300}
-            className="border-2 border-gray-300 rounded"
+            className="border-1 border-gray-400 rounded"
           />
         </div>
       </section>
+
+      <footer
+        className="mt-20 text-center text-white min-w-screen p-10 bg-[#1f8ece]"
+        w-
+      >
+        <p>
+          Desenvolvido pelo{" "}
+          <Link
+            href="arturcosta.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            Prof. Arthur Giangiarulo
+          </Link>
+        </p>
+      </footer>
     </main>
   );
 }
