@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { Download } from "lucide-react";
 import QRCode from "qrcode";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Download, Github as GitHubIcon } from "lucide-react";
+
 
 export default function HomePage() {
   const [url, setUrl] = useState("");
@@ -54,11 +55,46 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="min-w-screen p-10 bg-[#164194]">
-          <h1 className="text-4xl font-black text-white">Gerador de QR Code</h1>
-          <p className="mt-2 text-lg text-white">
-            Insira a URL e gere seu QR Code sem prazo para expirar
-          </p>
+        <div
+          className="relative min-w-screen p-12 overflow-hidden
+                bg-gradient-to-r from-[#164194] to-[#1F8ECE]"
+        >
+          {/* SVG de pattern de linhas */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-10"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern
+                id="lines"
+                width="30"
+                height="20"
+                patternUnits="userSpaceOnUse"
+                patternTransform="rotate(25)"
+              >
+                <line
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="20"
+                  stroke="#fff"
+                  strokeWidth="1"
+                />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#lines)" />
+          </svg>
+
+          {/* Conteúdo por cima do SVG */}
+          <div className="relative z-10 text-center">
+            <h1 className="text-4xl font-black text-white">
+              Gerador de QR Code
+            </h1>
+            <p className="mt-2 text-lg text-white">
+              Insira a URL e gere seu QR Code sem prazo para expirar
+            </p>
+          </div>
         </div>
       </header>
 
@@ -82,7 +118,7 @@ export default function HomePage() {
                 disabled:opacity-50
                 cursor-pointer
                 transition"
-              disableElevation 
+              disableElevation
               variant="contained"
             >
               Gerar QR Code
@@ -94,7 +130,6 @@ export default function HomePage() {
                 text-[#164194] border-2 border-[#164194] 
                 rounded-lg cursor-pointer 
                 hover:bg-gray-100 transition"
-
               variant="outlined"
             >
               Limpar
@@ -110,7 +145,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-8">
-        <div className="relative w-[300px] h-[300px] border border-gray-400 rounded-lg overflow-hidden">
+          <div className="relative w-[300px] h-[300px] border border-gray-400 rounded-lg overflow-hidden">
             {loading && (
               <div className="absolute inset-0 flex items-center justify-center bg-white">
                 <CircularProgress />
@@ -130,21 +165,33 @@ export default function HomePage() {
       </section>
 
       <footer
-        className="mt-20 text-center text-white min-w-screen p-10 bg-[#1f8ece]"
-        w-
-      >
-        <p>
-          Desenvolvido pelo{" "}
-          <Link
-            href="arturcosta.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            Prof. Arthur Giangiarulo
-          </Link>
-        </p>
-      </footer>
+  className="mt-20 text-center text-white w-full p-10 bg-[#1f8ece]"
+>
+  <p>
+    Desenvolvido pelo{" "}
+    <Link
+      href="https://arturcosta.dev"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:underline"
+    >
+      Prof. Arthur Giangiarulo
+    </Link>
+  </p>
+
+  {/* Nova área de contribuição */}
+  <p className="mt-4">
+    <Link
+      href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center justify-center gap-2 text-white hover:opacity-80 transition"
+    >
+      <GitHubIcon fontSize="small" /> Contribua no GitHub
+    </Link>
+  </p>
+</footer>
+
     </main>
   );
 }
